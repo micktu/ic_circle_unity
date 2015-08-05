@@ -131,7 +131,9 @@ public class Entity : MonoBehaviour
 
     protected bool CheckHoleCollision()
     {
-        var hit = Circle.Hole != null && (Circle.Hole.Position - Position).magnitude <= Data.Radius * VisualCircle.Width / 2 / 0.95f;
+       //var hit = Circle.Hole != null && (Circle.Hole.Position - Position).magnitude <= Data.Radius * VisualCircle.Width / 2 / 0.95f;
+        var direction = (int)Data.Direction * 2 - 1;
+        var hit = Circle.Hole != null && Mathf.Repeat(direction * (Circle.Hole.Data.Angle - Data.Angle), 360f) <= 15f;
 
         if (hit && _isinHole) return false;
 
