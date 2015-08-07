@@ -15,6 +15,8 @@ public class GameManager : MonoBehaviour
 
     public float GameStartTime { get; private set; }
 
+    public float ReferenceWidth;
+
     public float UnitsPerPixel { get; private set; }
     public float ReferenceUnitScale { get; private set; }
     public float ReferencePixelScale { get; private set; }
@@ -144,8 +146,8 @@ public class GameManager : MonoBehaviour
             height != _oldScreenHeight)
         {
             UnitsPerPixel = Camera.main.orthographicSize * 2 / Screen.height;
-            ReferenceUnitScale = Camera.main.orthographicSize * 2 * Camera.main.aspect / Constants.ReferenceWidth;
-            ReferencePixelScale = (float)Screen.width / Constants.ReferenceWidth;
+            ReferenceUnitScale = Camera.main.orthographicSize * 2 * Camera.main.aspect / ReferenceWidth;
+            ReferencePixelScale = (float)Screen.width / ReferenceWidth;
 
             _oldOrientation = orientation;
             _oldScreenWidth = width;

@@ -47,7 +47,7 @@ public static class MeshFactory
 
     }
 
-    public static Mesh GetRingMesh(float desiredRadius, float thickness, bool useCache = true, Mesh mesh = null)
+    public static Mesh GetRingMesh(float desiredRadius, float thickness, ref Mesh mesh, bool useCache = true)
     {
         useCache &= mesh == null;
 

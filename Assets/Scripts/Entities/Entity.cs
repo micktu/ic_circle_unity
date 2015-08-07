@@ -15,8 +15,16 @@ public class Entity : MonoBehaviour
 
     //private Vector3 _scale = Vector3.one;
 
-    [NonSerialized]
-    public EntityData Data = new EntityData();
+    private EntityData _data;
+    public EntityData Data
+    {
+        get { return _data; }
+        set
+        {
+            _data = value;
+            _speed = value != null ? value.Speed : 0;
+        }
+    }
 
     [NonSerialized]
     public Circle Circle;
@@ -59,6 +67,7 @@ public class Entity : MonoBehaviour
     protected virtual void Start()
     {
 
+    
     }
 
     protected virtual void Update()

@@ -121,12 +121,18 @@ public class Level : MonoBehaviour
         }
 
         Character.Circle = isIn ? Character.Circle.Next : Character.Circle.Previous;
-        Character.Stop();
+        //Character.Stop();
 
         for (var i = 0; i < RingLayout.Length - 1; i++)
         {
-            CircleObjects[i + indexOffset].Layout = RingLayout[i + indexOffset + sourceOffset];
-            CircleObjects[i + indexOffset].TargetLayout = RingLayout[i + indexOffset];
+            var circle = CircleObjects[i + indexOffset];
+            
+            if (!circle.IsAnimating)
+            {
+                circle.Layout = RingLayout[i + indexOffset + sourceOffset];
+            }
+
+            circle.TargetLayout = RingLayout[i + indexOffset];
         }
 
         UpdateData();
@@ -168,10 +174,12 @@ public class Level : MonoBehaviour
 
     EntityData GetNewEnemyData()
     {
+        var enemy = EnemyPrefab.GetComponent<Enemy>();
+
         return new EntityData
         {
             Angle = Random.value * 360,
-            Speed = Random.value * 50 + 50,
+            Speed = Random.Range(enemy.MinSpeed, enemy.MaxSpeed),
             StartTime = Time.realtimeSinceStartup,
             Radius = 0.5f
         };

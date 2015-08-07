@@ -46,6 +46,8 @@ MonoBehaviour:
   AlignRotation: 0
   Acceleration: 100
   Gravity: 5
+  MinSpeed: 10
+  MaxSpeed: 80
   StickTime: 3
 --- !u!212 &21235522
 SpriteRenderer:
@@ -115,6 +117,14 @@ Prefab:
     - target: {fileID: 0}
       propertyPath: StickTime
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MinSpeed
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: MaxSpeed
+      value: 80
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}

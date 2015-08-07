@@ -18,7 +18,7 @@ public class Circle : MonoBehaviour
     public Circle Previous;
     public Circle Next;
 
-    public float AnimationPeriod = 0.5f;
+    public float AnimationPeriod;
 
     public float Radius = 1.0f;
     public float Width = 0.5f;
@@ -28,7 +28,7 @@ public class Circle : MonoBehaviour
     private MeshFilter _meshFilter;
     private MeshRenderer _meshRenderer;
 
-    private bool _isAnimating;
+    public bool IsAnimating { get; private set; }
     private float _animationTime;
 
     private bool _isMeshDirty;
@@ -60,6 +60,7 @@ public class Circle : MonoBehaviour
                         var go = Level.HolePrefab.Spawn(Level.transform);
                         Hole = go.GetComponent<Hole>();
                         Hole.Circle = this;
+                        if (Hole.Data == null) Hole.Data = new EntityData();
                     }
 
                     Hole.Data.Angle = Data.HoleAngle;
@@ -71,7 +72,7 @@ public class Circle : MonoBehaviour
                         var enemy = go.GetComponent<Enemy>();
                         enemy.Circle = this;
                         enemy.Data = entity;
-                        enemy.Stop();
+                        //enemy.Stop();
                         enemy.EnterIdle();
                         enemy.UpdatePosition();
 
@@ -119,7 +120,7 @@ public class Circle : MonoBehaviour
         set
         {
             _targetLayout = value;
-            _isAnimating = true;
+            IsAnimating = true;
         }
     }
     
@@ -155,13 +156,13 @@ public class Circle : MonoBehaviour
 
     void Update()
     {
-        if (!_isMeshDirty && !_isAnimating) return;
+        if (!_isMeshDirty && !IsAnimating) return;
 
         var radius = (float)Layout.Radius;
         var width = (float)Layout.Width;
         var color = Layout.Color;
 
-        if (_isAnimating)
+        if (IsAnimating)
         {
             if (_animationTime < AnimationPeriod)
             {
@@ -181,7 +182,7 @@ public class Circle : MonoBehaviour
                 Layout = TargetLayout;
 
                 _animationTime = 0;
-                _isAnimating = false;
+                IsAnimating = false;
             }
 
             _isMeshDirty = true;
@@ -193,11 +194,13 @@ public class Circle : MonoBehaviour
 
         if (_isMeshDirty)
         {
+            var mesh = _meshFilter.sharedMesh;
+            var isFresh = mesh == null;
 
-            _meshFilter.sharedMesh = MeshFactory.GetRingMesh(Radius, Width, _meshFilter.sharedMesh);
+            MeshFactory.GetRingMesh(Radius, Width, ref mesh, false);
+            if (isFresh) _meshFilter.sharedMesh = mesh;
 
             var material = _meshRenderer.material;
-
             material.color = color;
             //material.SetFloat("_Thickness", width * GameManager.Instance.ReferencePixelScale);
 
@@ -205,8 +208,8 @@ public class Circle : MonoBehaviour
         }
 
         //transform.localPosition = (Vector2)transform.localPosition;
-        transform.localRotation = Quaternion.identity;
-        transform.localScale = Vector3.one;
+        //transform.localRotation = Quaternion.identity;
+        //transform.localScale = Vector3.one;
     }
 
     public Vector2 AngleToPoint(float angle, float distance = 0)

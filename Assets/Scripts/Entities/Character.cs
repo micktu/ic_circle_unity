@@ -7,10 +7,14 @@ using System.Linq;
 public class Character : Entity
 {
     public float Speed;
+    public int SpeedIncreaseLevel;
+    public float SpeedPerLevel;
 
     public float StickDistanceToCharacter = 120f;
     public float StickDistanceBetweenEnemies = 45f;
     public float StickDangerDistance = 45f;
+
+    public bool Invulnerable;
 
     protected override void Start()
     {
@@ -59,12 +63,15 @@ public class Character : Entity
     {
         if (CheckHoleCollision())
         {
+            var levelDifference = 1 + Circle.Level.CurrentLevel - SpeedIncreaseLevel;
+            Data.Speed = levelDifference > 0 ? Speed + levelDifference * SpeedPerLevel : Speed;
+
             Circle.Level.Animate(1 - (int) Data.Side * 2);
             SwitchSide();
             return;
         }
 
-        if (Circle.Enemies.Any(CheckCollision))
+        if (!Invulnerable && Circle.Enemies.Any(CheckCollision))
         {
             GameManager.Instance.EnterPostGame();
             return;

@@ -11,6 +11,9 @@ public class Enemy : Entity
         Stuck
     }
 
+    public float MinSpeed;
+    public float MaxSpeed;
+
     public float StickTime;
 
     private float _stateTime;

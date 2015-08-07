@@ -1,7 +1,5 @@
 ﻿static class Constants
 {
-    public const int ReferenceWidth = 1440;
-
     public const int AppId = 1;
     public const int PlatformId = 1;
 
