@@ -48,6 +48,7 @@ public class GameManager : MonoBehaviour
             ContainerPostGame.SetActive(false);
             ContainerLeaderboard.SetActive(false);
             Level.Clear();
+            Level.IsMenuMode = true;
 
             _lastState = _state;
             _state = value;
@@ -122,6 +123,7 @@ public class GameManager : MonoBehaviour
         
         ContainerHUD.SetActive(true);
         Level.Init();
+        Level.IsMenuMode = false;
         IsPaused = true;
     }
 
@@ -147,7 +149,7 @@ public class GameManager : MonoBehaviour
         {
             UnitsPerPixel = Camera.main.orthographicSize * 2 / Screen.height;
             ReferenceUnitScale = Camera.main.orthographicSize * 2 * Camera.main.aspect / ReferenceWidth;
-            ReferencePixelScale = (float)Screen.width / ReferenceWidth;
+            ReferencePixelScale = Screen.width / ReferenceWidth;
 
             _oldOrientation = orientation;
             _oldScreenWidth = width;

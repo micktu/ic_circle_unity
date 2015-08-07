@@ -15,6 +15,18 @@ public class Level : MonoBehaviour
 
     public int CurrentLevel { get; private set; }
 
+    private bool _isMenuMode;
+    public bool IsMenuMode
+    {
+        get { return _isMenuMode; }
+        set
+        {
+            _isMenuMode = value;
+            CircleObjects[4].GetComponent<Renderer>().enabled =
+                CircleObjects[5].GetComponent<Renderer>().enabled = !value;
+        }
+    }
+
     public RingLayout[] RingLayout;
 
     public Character Character;
@@ -68,8 +80,8 @@ public class Level : MonoBehaviour
 
     public void Init()
     {
-        UpdateData();
         AddCharacter();
+        UpdateData();
     }
 
     public void Clear()

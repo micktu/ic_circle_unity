@@ -697,7 +697,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &570127551
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1049,7 +1049,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 06377048a6e373b4782b3932331fcf40, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  RingPrefab: {fileID: 184672, guid: 1b3b97f2a2df0a246961c8d79ce43016, type: 2}
+  RingPrefab: {fileID: 184672, guid: 8656ae7685aa8384cac10a7e78403019, type: 2}
   HolePrefab: {fileID: 180344, guid: fd30737e65a00c140b895ade0079cf5b, type: 2}
   CharacterPrefab: {fileID: 180344, guid: 48ab8e3969bb97b4f816c4558b196e61, type: 2}
   EnemyPrefab: {fileID: 180344, guid: c1339bc9a0a69e2469ddc98ecd5e3070, type: 2}
@@ -2021,7 +2021,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1389922799
 RectTransform:
   m_ObjectHideFlags: 0

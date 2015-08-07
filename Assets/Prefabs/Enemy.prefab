@@ -46,6 +46,8 @@ MonoBehaviour:
   AlignRotation: 0
   Acceleration: 100
   Gravity: 5
+  ActiveMaterial: {fileID: 2100000, guid: c1e079e20c8e6924f88b943d587bd2d0, type: 2}
+  InactiveMaterial: {fileID: 2100000, guid: 6c2ccb9b615e7974081958be75c96d9b, type: 2}
   MinSpeed: 10
   MaxSpeed: 80
   StickTime: 3
@@ -74,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 8701e7153f5d4c1409bee7f24d5b5ea8, type: 3}
-  m_Color: {r: .388235301, g: .486274511, b: .886274517, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
 --- !u!1001 &100100000
 Prefab:
   m_ObjectHideFlags: 1
@@ -104,15 +106,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.r
-      value: .388235301
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.g
-      value: .486274511
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.b
-      value: .886274517
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: StickTime
@@ -126,6 +128,14 @@ Prefab:
       propertyPath: MaxSpeed
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: ActiveMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: c1e079e20c8e6924f88b943d587bd2d0, type: 2}
+    - target: {fileID: 0}
+      propertyPath: InactiveMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 6c2ccb9b615e7974081958be75c96d9b, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 180344}

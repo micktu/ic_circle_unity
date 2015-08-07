@@ -14,6 +14,6 @@ public class HUD : MonoBehaviour
     
     void Update()
     {
-        LevelText.text = GameManager.Instance.Level.CurrentLevel.ToString();
+        LevelText.text = GameManager.Instance.Level.Character.Score.ToString();
     }
 }

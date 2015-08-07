@@ -11,6 +11,8 @@ public class Enemy : Entity
         Stuck
     }
 
+    public Material ActiveMaterial, InactiveMaterial;
+
     public float MinSpeed;
     public float MaxSpeed;
 
@@ -64,12 +66,9 @@ public class Enemy : Entity
                 break;
         }
 
-        _stateTime += Time.deltaTime;
+        UpdateLayout();
 
-        var renderer = GetComponent<SpriteRenderer>();
-        renderer.enabled = !IsOutOfBounds;
-        var color = renderer.material.color;
-        renderer.material.color = new Color(color.r, color.g, color.b, VisualCircle != Circle.Level.Character.VisualCircle ? 0.5f : 1.0f);
+        _stateTime += Time.deltaTime;
     }
 
     public void EnterIdle()
@@ -88,6 +87,18 @@ public class Enemy : Entity
         if (CheckHoleCollision())
         {
             SwitchSide();
+        }
+    }
+
+    public void UpdateLayout()
+    {
+        var renderer = GetComponent<SpriteRenderer>();
+        
+        renderer.enabled = IsInBounds;
+        
+        if (IsInBounds)
+        {
+            renderer.material = VisualCircle == Circle.Level.Character.VisualCircle ? ActiveMaterial : InactiveMaterial;
         }
     }
 }

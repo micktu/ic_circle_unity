@@ -37,7 +37,7 @@ public class Entity : MonoBehaviour
         }
     }
 
-    public bool IsOutOfBounds
+    public bool IsInBounds
     {
         get
         {
@@ -46,7 +46,7 @@ public class Entity : MonoBehaviour
             return Circle == level.FirstCircle && Data.Side == EntityData.CircleSide.Outer ||
                    Circle == level.LastCircle && Data.Side == EntityData.CircleSide.Inner;
             */
-            return Circle == Circle.Level.FirstCircle;
+            return Circle != Circle.Level.FirstCircle;
         }
     }
 

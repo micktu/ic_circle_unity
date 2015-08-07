@@ -23,8 +23,6 @@ public class Circle : MonoBehaviour
     public float Radius = 1.0f;
     public float Width = 0.5f;
 
-    public Texture Texture;
-
     private MeshFilter _meshFilter;
     private MeshRenderer _meshRenderer;
 
@@ -63,8 +61,10 @@ public class Circle : MonoBehaviour
                         if (Hole.Data == null) Hole.Data = new EntityData();
                     }
 
+                    Hole.Data.Radius = 1f;
                     Hole.Data.Angle = Data.HoleAngle;
                     Hole.UpdatePosition();
+                    Hole.UpdateLayout();
 
                     foreach (var entity in Data.Entities)
                     {
@@ -75,6 +75,7 @@ public class Circle : MonoBehaviour
                         //enemy.Stop();
                         enemy.EnterIdle();
                         enemy.UpdatePosition();
+                        enemy.UpdateLayout();
 
                         Enemies.Add(enemy);
                     }
@@ -141,7 +142,6 @@ public class Circle : MonoBehaviour
     {
         _meshFilter = GetComponent<MeshFilter>();
         _meshRenderer = GetComponent<MeshRenderer>();
-        _meshRenderer.sharedMaterial.mainTexture = Texture;
     }
 
     void OnEnable()
@@ -180,6 +180,11 @@ public class Circle : MonoBehaviour
                 color = TargetLayout.Color;
 
                 Layout = TargetLayout;
+
+                if (Hole != null)
+                {
+                    Hole.UpdateLayout();
+                }
 
                 _animationTime = 0;
                 IsAnimating = false;

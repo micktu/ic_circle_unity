@@ -16,6 +16,8 @@ public class Character : Entity
 
     public bool Invulnerable;
 
+    public int Score;
+
     protected override void Start()
     {
     
@@ -57,6 +59,7 @@ public class Character : Entity
     public void Reset()
     {
         Data = new EntityData { Radius = 0.5f, Speed = Speed, Angle = 90f };
+        Score = 0;
     }
 
     protected override void HandleCollision()
@@ -68,6 +71,13 @@ public class Character : Entity
 
             Circle.Level.Animate(1 - (int) Data.Side * 2);
             SwitchSide();
+
+            var currentLevel = Circle.Level.CurrentLevel;
+            if (Score < currentLevel)
+            {
+                Score = currentLevel;
+            }
+
             return;
         }
 

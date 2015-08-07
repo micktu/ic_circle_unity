@@ -108,15 +108,15 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.r
-      value: .917647064
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.g
-      value: .345098048
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: m_Color.b
-      value: .447058827
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 0}
       propertyPath: StickDistanceToCharacter
@@ -146,6 +146,11 @@ Prefab:
       propertyPath: SpeedIncreaseLevel
       value: 5
       objectReference: {fileID: 0}
+    - target: {fileID: 0}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 8701e7153f5d4c1409bee7f24d5b5ea8,
+        type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 180344}
