@@ -73,21 +73,21 @@
 				float4 c = tex2D(_MainTex, IN.texcoord) * IN.color; 
 
 				// pass 1: blend offset circle with background
-				if (_Radius > 0)
+				if (_Radius != 0)
 				{
-					edge_dist = 1 - length((IN.texcoord - float2(_X + 0.5 - _Radius, _Y + 0.5 - _Radius)) / _Radius - float2(1, 1));
+					edge_dist = 1 - length((IN.texcoord - float2(_X, _Y) - 0.5 + _Radius) / _Radius - 1);
 					pixel_width = length(float2(ddx(edge_dist), ddy(edge_dist)));
 					mask = saturate(edge_dist / pixel_width);
 					c = lerp(c, _CircleColor, mask);
 				}
 
 				// pass 2: apply circle mask
-				edge_dist = 1.0 - length(IN.texcoord - float2(0.5, 0.5)) * 2;
+				edge_dist = 1.0 - length(IN.texcoord - 0.5) * 2;
 				pixel_width = length(float2(ddx(edge_dist), ddy(edge_dist)));
 				mask = saturate(edge_dist / pixel_width);
 
 				// pass 3: apply cutout
-				if (_Thickness > 0)
+				if (_Thickness != 0)
 				{
 					mask -= saturate((edge_dist - pixel_width * (_Thickness + 1)) / pixel_width);
 				}
