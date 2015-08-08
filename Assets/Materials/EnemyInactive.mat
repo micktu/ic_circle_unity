@@ -7,7 +7,7 @@ Material:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_Name: EnemyInactive
-  m_Shader: {fileID: 4800000, guid: 57a2cf936a832f84797e47a774eb5f1b, type: 3}
+  m_Shader: {fileID: 4800000, guid: 139359a50ecc5f049b55bb936c2e2555, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -59,7 +59,7 @@ Material:
       data:
         first:
           name: _Color
-        second: {r: .552119374, g: .604099095, b: .816176474, a: 1}
+        second: {r: .633434236, g: .676644266, b: .852941155, a: 1}
       data:
         first:
           name: _CircleColor

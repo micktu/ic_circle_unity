@@ -6,8 +6,8 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Circle
-  m_Shader: {fileID: 4800000, guid: 139359a50ecc5f049b55bb936c2e2555, type: 3}
+  m_Name: Hole
+  m_Shader: {fileID: 4800000, guid: bd1883a0c84069d4eb0d20328fd67681, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
   m_CustomRenderQueue: -1
@@ -29,31 +29,11 @@ Material:
         second: 0
       data:
         first:
-          name: PixelSnap
-        second: 0
-      data:
-        first:
-          name: _Thickness
-        second: 0
-      data:
-        first:
           name: _X
         second: 0
       data:
         first:
           name: _Y
-        second: 0
-      data:
-        first:
-          name: _Blur
-        second: 1
-      data:
-        first:
-          name: _Sharpen
-        second: 0
-      data:
-        first:
-          name: Hollow
         second: 0
     m_Colors:
       data:

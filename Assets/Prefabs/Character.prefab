@@ -53,6 +53,7 @@ MonoBehaviour:
   StickDistanceBetweenEnemies: 45
   StickDangerDistance: 45
   Invulnerable: 0
+  Score: 0
 --- !u!212 &21235522
 SpriteRenderer:
   m_ObjectHideFlags: 1

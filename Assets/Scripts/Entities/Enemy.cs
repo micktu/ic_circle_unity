@@ -98,7 +98,7 @@ public class Enemy : Entity
         
         if (IsInBounds)
         {
-            renderer.material = VisualCircle == Circle.Level.Character.VisualCircle ? ActiveMaterial : InactiveMaterial;
+            renderer.sharedMaterial = VisualCircle == Circle.Level.Character.VisualCircle ? ActiveMaterial : InactiveMaterial;
         }
     }
 }
