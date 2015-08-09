@@ -2,6 +2,8 @@
 {
     public const int AppId = 1;
     public const int PlatformId = 1;
+    public const string Version = "0.5";
+    public const string BuildId = "Circle";
 
     public static string ServerFuseUrl = "https://icecatstudio.com/lab/fuses/circle-fuse";
     public static string ServerFirstUrl = "https://icecatstudio.com/lab/service/first.php?locale={0}&ver={1}&build={2}&appid={3}";

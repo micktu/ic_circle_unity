@@ -46,9 +46,8 @@ public class Level : MonoBehaviour
         Debug.Assert(CircleObjects == null);
 
         var count = RingLayout.Length;
-        CircleObjects = new Circle[count];
 
-        Circle first, last;
+        CircleObjects = new Circle[count];
 
         for (var i = 0; i < count; i++)
         {
@@ -61,7 +60,7 @@ public class Level : MonoBehaviour
 
             if (i > 0)
             {
-                last = CircleObjects[i - 1];
+                var last = CircleObjects[i - 1];
                 circle.Previous = last;
                 last.Next = circle;
             }
@@ -135,16 +134,26 @@ public class Level : MonoBehaviour
         Character.Circle = isIn ? Character.Circle.Next : Character.Circle.Previous;
         //Character.Stop();
 
-        for (var i = 0; i < RingLayout.Length - 1; i++)
+        var count = RingLayout.Length - 1;
+        for (var i = 0; i < count; i++)
         {
             var circle = CircleObjects[i + indexOffset];
-            
+
             if (!circle.IsAnimating)
             {
                 circle.Layout = RingLayout[i + indexOffset + sourceOffset];
             }
 
-            circle.TargetLayout = RingLayout[i + indexOffset];
+            circle.Animate(RingLayout[i + indexOffset]);
+        }
+        
+        // FIXME
+        if (!isIn)
+        {
+            var circle = CircleObjects.Last();
+            var lastLayout = RingLayout.Last();
+            circle.Layout = new RingLayout { Color = lastLayout.Color };
+            circle.Animate(lastLayout);
         }
 
         UpdateData();

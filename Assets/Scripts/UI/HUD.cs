@@ -6,6 +6,7 @@ using System.Collections.Generic;
 public class HUD : MonoBehaviour
 {
     public Text LevelText;
+    public Image Overlay;
 
     void Start()
     {

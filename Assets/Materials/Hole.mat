@@ -26,21 +26,21 @@ Material:
       data:
         first:
           name: _Radius
-        second: 0
+        second: 4.46392584
       data:
         first:
           name: _X
-        second: 0
+        second: 3.90977454
       data:
         first:
           name: _Y
-        second: 0
+        second: 2.15413523
     m_Colors:
       data:
         first:
           name: _Color
-        second: {r: 1, g: 1, b: 1, a: 1}
+        second: {r: .807843149, g: .807843149, b: .807843149, a: 1}
       data:
         first:
           name: _CircleColor
-        second: {r: .5, g: .5, b: .5, a: 1}
+        second: {r: .929411769, g: .929411769, b: .929411769, a: 1}

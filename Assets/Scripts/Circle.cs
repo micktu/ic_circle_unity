@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq.Expressions;
@@ -6,13 +7,6 @@ using System.Runtime.InteropServices;
 
 public class Circle : MonoBehaviour
 {
-    public struct CircleContext
-    {
-        public RingLayout From;
-        public RingLayout To;
-        public CircleData Data;
-    }
-
     public float LayerZ;
 
     public Circle Previous;
@@ -22,12 +16,17 @@ public class Circle : MonoBehaviour
 
     public float Radius = 1.0f;
     public float Width = 0.5f;
+    public Color Color;
 
     private MeshFilter _meshFilter;
     private MeshRenderer _meshRenderer;
 
-    public bool IsAnimating { get; private set; }
-    private float _animationTime;
+    public bool IsAnimating
+    {
+        get { return _animation != null; }
+    }
+
+    private Coroutine _animation;
 
     private bool _isMeshDirty;
 
@@ -100,20 +99,20 @@ public class Circle : MonoBehaviour
 
     public List<Enemy> Enemies = new List<Enemy>();
 
-    private RingLayout _layout;
     public RingLayout Layout
     {
-        get { return _layout; }
         set
         {
-            _layout = value;
-
             var us = GameManager.Instance.ReferenceUnitScale;
-            Radius = _layout.Radius * us;
-            Width = _layout.Width * us;
+            Radius = value.Radius * us;
+            Width = value.Width * us;
+            Color = value.Color;
+
+            _isMeshDirty = true;
         }
     }
 
+    /*
     private RingLayout _targetLayout;
     public RingLayout TargetLayout
     {
@@ -124,6 +123,7 @@ public class Circle : MonoBehaviour
             IsAnimating = true;
         }
     }
+     * */
     
     public Vector2 Position
     {
@@ -156,47 +156,6 @@ public class Circle : MonoBehaviour
 
     void Update()
     {
-        if (!_isMeshDirty && !IsAnimating) return;
-
-        var radius = (float)Layout.Radius;
-        var width = (float)Layout.Width;
-        var color = Layout.Color;
-
-        if (IsAnimating)
-        {
-            if (_animationTime < AnimationPeriod)
-            {
-                var t = _animationTime / AnimationPeriod;
-                radius = Mathf.Lerp(radius, TargetLayout.Radius, t);
-                width = Mathf.Lerp(width, TargetLayout.Width, t);
-                color = Color.Lerp(color, TargetLayout.Color, t);
-
-                _animationTime += Time.deltaTime;
-            }
-            else
-            {
-                radius = TargetLayout.Radius;
-                width = TargetLayout.Width;
-                color = TargetLayout.Color;
-
-                Layout = TargetLayout;
-
-                if (Hole != null)
-                {
-                    Hole.UpdateLayout();
-                }
-
-                _animationTime = 0;
-                IsAnimating = false;
-            }
-
-            _isMeshDirty = true;
-        }
-
-        var us = GameManager.Instance.ReferenceUnitScale;
-        Radius = radius * us;
-        Width = width * us;
-
         if (_isMeshDirty)
         {
             var mesh = _meshFilter.sharedMesh;
@@ -206,8 +165,13 @@ public class Circle : MonoBehaviour
             if (isFresh) _meshFilter.sharedMesh = mesh;
 
             var material = _meshRenderer.material;
-            material.color = color;
+            material.color = Color;
             //material.SetFloat("_Thickness", width * GameManager.Instance.ReferencePixelScale);
+
+            if (Hole != null)
+            {
+                Hole.UpdateLayout();
+            }
 
             _isMeshDirty = false;
         }
@@ -215,6 +179,54 @@ public class Circle : MonoBehaviour
         //transform.localPosition = (Vector2)transform.localPosition;
         //transform.localRotation = Quaternion.identity;
         //transform.localScale = Vector3.one;
+    }
+
+
+    public void Animate(RingLayout targetLayout)
+    {
+        if (_animation != null)
+        {
+            StopCoroutine(_animation);
+        }
+
+        _animation = StartCoroutine(AnimationCoroutine(targetLayout));
+    }
+
+    private IEnumerator AnimationCoroutine(RingLayout targetLayout)
+    {
+        var sRadius = Radius;
+        var sWidth = Width;
+        var sColor = Color;
+
+        var us = GameManager.Instance.ReferenceUnitScale;
+        
+        var tRadius = targetLayout.Radius * us;
+        var tWidth = targetLayout.Width * us;
+        var tColor = targetLayout.Color;
+
+        float time = 0;
+
+        while (time < AnimationPeriod)
+        {
+            var t = time / AnimationPeriod;
+            Radius = Mathf.Lerp(sRadius, tRadius, t);
+            Width = Mathf.Lerp(sWidth, tWidth, t);
+            Color = Color.Lerp(sColor, tColor, t);
+
+            _isMeshDirty = true;
+
+            time += Time.deltaTime;
+            yield return null;
+        }
+
+        Layout = targetLayout;
+
+        _animation = null;
+    }
+
+    public void SetDirty()
+    {
+        _isMeshDirty = true;
     }
 
     public Vector2 AngleToPoint(float angle, float distance = 0)

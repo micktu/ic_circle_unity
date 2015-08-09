@@ -2,11 +2,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text;
+using DG.Tweening;
 using UnityEngine.Assertions;
+using UnityEngine.UI;
 using UnityEngineInternal;
 
 public class GameManager : MonoBehaviour
 {
+    public CanvasScaler CanvasScaler;
+
     public Level Level;
 
     public GameObject ContainerMainMenu, ContainerHUD, ContainerPostGame, ContainerHelp, ContainerLeaderboard;
@@ -19,7 +23,7 @@ public class GameManager : MonoBehaviour
 
     public float UnitsPerPixel { get; private set; }
     public float ReferenceUnitScale { get; private set; }
-    public float ReferencePixelScale { get; private set; }
+    //public float ReferencePixelScale { get; private set; }
 
     private ScreenOrientation _oldOrientation;
     private int _oldScreenWidth, _oldScreenHeight;
@@ -70,10 +74,14 @@ public class GameManager : MonoBehaviour
 #if UNITY_IOS
 		Application.targetFrameRate = 60;
 #endif
-	}
+
+        CheckResize();
+    }
 
     void Start()
     {
+        CanvasScaler = FindObjectOfType<Canvas>().GetComponent<CanvasScaler>();
+
         GameStartTime = Time.realtimeSinceStartup;
 
         EnterMainMenu();
@@ -81,7 +89,7 @@ public class GameManager : MonoBehaviour
     
     void Update()
     {
-        CheckResize();
+        //CheckResize();
 
         var backPressed = Input.GetKeyDown(KeyCode.Escape);
         var tapped = Input.GetButtonDown("Fire1");
@@ -129,11 +137,11 @@ public class GameManager : MonoBehaviour
 
     public void EnterPostGame()
     {
-        var postGame = ContainerPostGame.GetComponent<PostGame>();
-        postGame.Init();
-
         State = StateType.PostGame;
 
+        var postGame = ContainerPostGame.GetComponent<PostGame>();
+        postGame.Init();
+        
         ContainerPostGame.SetActive(true);
     }
 
@@ -147,13 +155,23 @@ public class GameManager : MonoBehaviour
             width != _oldScreenWidth ||
             height != _oldScreenHeight)
         {
-            UnitsPerPixel = Camera.main.orthographicSize * 2 / Screen.height;
-            ReferenceUnitScale = Camera.main.orthographicSize * 2 * Camera.main.aspect / ReferenceWidth;
-            ReferencePixelScale = Screen.width / ReferenceWidth;
+            var isWide = width > height;
+
+            UnitsPerPixel = Camera.main.orthographicSize * 2 / height;
+            ReferenceUnitScale = Camera.main.orthographicSize * 2 * (isWide ? Camera.main.aspect : 1) / ReferenceWidth;
+            //ReferencePixelScale = width / ReferenceWidth;
 
             _oldOrientation = orientation;
             _oldScreenWidth = width;
             _oldScreenHeight = height;
+            /*
+            CanvasScaler.matchWidthOrHeight = isWide ? 0 : 1;
+
+            foreach (var circleObject in Level.CircleObjects)
+            {
+                circleObject.SetDirty();
+            }
+             * */
         }
     }
 }

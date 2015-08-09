@@ -3,6 +3,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 
 public class Character : Entity
 {
@@ -18,6 +19,8 @@ public class Character : Entity
 
     public int Score;
 
+    private bool _isDead;
+
     protected override void Start()
     {
     
@@ -28,6 +31,8 @@ public class Character : Entity
         if (GameManager.Instance.IsPaused)
         {
             UpdatePosition();
+
+            if (_isDead) return;
 
             if (Input.GetButtonDown("Fire1"))
             {
@@ -60,6 +65,23 @@ public class Character : Entity
     {
         Data = new EntityData { Radius = 0.5f, Speed = Speed, Angle = 90f };
         Score = 0;
+        _isDead = false;
+    }
+
+    public void Die()
+    {
+        _isDead = true;
+        var gm = GameManager.Instance;
+        gm.IsPaused = true;
+
+        var overlay = gm.ContainerHUD.GetComponent<HUD>().Overlay;
+        var color = new Color(0.8f, 0.8f, 0.8f, 0f);
+        overlay.color = color;
+        overlay.DOFade(1f, 1f).SetEase(Ease.Linear).OnComplete(() =>
+        {
+            overlay.color = color;
+            gm.EnterPostGame();
+        });
     }
 
     protected override void HandleCollision()
@@ -83,7 +105,7 @@ public class Character : Entity
 
         if (!Invulnerable && Circle.Enemies.Any(CheckCollision))
         {
-            GameManager.Instance.EnterPostGame();
+            Die();
             return;
         }
 

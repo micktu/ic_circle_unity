@@ -19,8 +19,8 @@ public class Hole : Entity
         var offset = (Circle.Position - Circle.AngleToPoint(Data.Angle)) / scale;
 
         var material = GetComponent<SpriteRenderer>().material;
-        material.SetColor("_Color", Circle.Layout.Color);
-        material.SetColor("_CircleColor", Circle.Previous.Layout.Color);
+        material.SetColor("_Color", Circle.Color);
+        material.SetColor("_CircleColor", Circle.Previous.Color);
         material.SetFloat("_Radius", radius);
         material.SetFloat("_X", offset.x);
         material.SetFloat("_Y", offset.y);
