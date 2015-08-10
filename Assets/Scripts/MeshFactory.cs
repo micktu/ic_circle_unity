@@ -12,7 +12,10 @@ public static class MeshFactory
     static readonly int[] _triangles;
     static readonly Vector3[] _normals;
 
-    static readonly Dictionary<float, Mesh> _meshes = new Dictionary<float, Mesh>();
+    private static Vector3[] _vertexBuffer;
+    private static Vector2[] _uvBuffer;
+
+    //static readonly Dictionary<float, Mesh> _meshes = new Dictionary<float, Mesh>();
 
     static MeshFactory()
     {
@@ -45,10 +48,15 @@ public static class MeshFactory
             _triangles[ti + 5] = j;
         }
 
+
+        _vertexBuffer = new Vector3[count];
+        _uvBuffer = new Vector2[count];
     }
 
-    public static Mesh GetRingMesh(float desiredRadius, float thickness, ref Mesh mesh, bool useCache = true)
+    //public static Mesh GetRingMesh(float desiredRadius, float thickness, ref Mesh mesh, bool useCache = true)
+    public static Mesh GetRingMesh(float desiredRadius, float thickness, ref Mesh mesh)
     {
+        /*
         useCache &= mesh == null;
 
         if (useCache)
@@ -56,6 +64,7 @@ public static class MeshFactory
             _meshes.TryGetValue(desiredRadius, out mesh);
             if (mesh != null) return mesh;
         }
+         * */
 
         var margin = MARGIN_PIXELS * GameManager.Instance.UnitsPerPixel;
 
@@ -64,8 +73,9 @@ public static class MeshFactory
         var innerRadius = desiredRadius - thickness - margin;
 
         var count = segments * 2;
-        var vertices = new Vector3[count];
-        var uvs = new Vector2[count];
+
+        var vertices = _vertexBuffer;
+        var uvs = _uvBuffer;
 
         var qo = desiredRadius / radius;
         var qi = 1 - (thickness + margin) / radius / qo;
@@ -94,14 +104,16 @@ public static class MeshFactory
         }
         else
         {
+            mesh.MarkDynamic();
             mesh.vertices = vertices;
             mesh.uv = uvs;
         }
-
+        /*
         if (useCache)
         {
             _meshes[desiredRadius] = mesh;
         }
+        */
 
         return mesh;
     }

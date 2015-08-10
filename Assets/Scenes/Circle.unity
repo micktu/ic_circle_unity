@@ -1018,7 +1018,7 @@ GameObject:
   - 222: {fileID: 667658722}
   - 114: {fileID: 667658721}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1049,19 +1049,18 @@ MonoBehaviour:
   m_GameObject: {fileID: 667658719}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
+  m_Script: {fileID: -98529514, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
   m_Color: {r: .807843149, g: .807843149, b: .807843149, a: 1}
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
+  m_Texture: {fileID: 0}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!222 &667658722
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1767,7 +1766,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 370beb4f8f528774dba9c31a1c2e891d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  CanvasScaler: {fileID: 0}
+  CanvasScaler: {fileID: 1125652700}
   Level: {fileID: 734716306}
   ContainerMainMenu: {fileID: 1197305268}
   ContainerHUD: {fileID: 549202488}
@@ -1775,6 +1774,7 @@ MonoBehaviour:
   ContainerHelp: {fileID: 1570759454}
   ContainerLeaderboard: {fileID: 864618912}
   ReferenceWidth: 1440
+  UIMaterial: {fileID: 0}
   IsPaused: 0
 --- !u!4 &1019599895
 Transform:
@@ -2247,7 +2247,7 @@ GameObject:
   - 222: {fileID: 1343097273}
   - 114: {fileID: 1343097272}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Background
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2281,7 +2281,7 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_Sprite: {fileID: 0}
   m_Type: 0
@@ -2677,7 +2677,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1570759455
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3204,7 +3204,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1983795562
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3233,8 +3233,8 @@ MonoBehaviour:
   m_Script: {fileID: -765806418, guid: f5f67c52d1564df4a8936ccd202a3bd8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 0}
+  m_Material: {fileID: 10754, guid: 0000000000000000e000000000000000, type: 0}
+  m_Color: {r: .807843149, g: .807843149, b: .807843149, a: 0}
   m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0

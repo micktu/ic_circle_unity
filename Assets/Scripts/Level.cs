@@ -31,9 +31,11 @@ public class Level : MonoBehaviour
 
     public Character Character;
 
+    private RingLayout _centerLayout;
+
     void Awake()
     {
-        SetupCircles();
+       SetupCircles();
     }
 
     void Update()
@@ -75,6 +77,8 @@ public class Level : MonoBehaviour
         
         FirstCircle.Previous = LastCircle;
         LastCircle.Next = FirstCircle;
+
+        _centerLayout = new RingLayout { Color = RingLayout[count - 1].Color };
     }
 
     public void Init()
@@ -152,7 +156,7 @@ public class Level : MonoBehaviour
         {
             var circle = CircleObjects.Last();
             var lastLayout = RingLayout.Last();
-            circle.Layout = new RingLayout { Color = lastLayout.Color };
+            circle.Layout = _centerLayout;
             circle.Animate(lastLayout);
         }
 

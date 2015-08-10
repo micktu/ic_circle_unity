@@ -44,7 +44,7 @@ public class Character : Entity
 
         UpdateOrbit();
         
-        HandleCollision();
+		HandleCollision();
 
         if (Input.GetButtonDown("Fire1"))
         {
@@ -75,11 +75,14 @@ public class Character : Entity
         gm.IsPaused = true;
 
         var overlay = gm.ContainerHUD.GetComponent<HUD>().Overlay;
-        var color = new Color(0.8f, 0.8f, 0.8f, 0f);
-        overlay.color = color;
-        overlay.DOFade(1f, 1f).SetEase(Ease.Linear).OnComplete(() =>
+		overlay.gameObject.SetActive(true);
+        
+		var color = overlay.color;
+
+		overlay.DOFade(1f, 1f).SetEase(Ease.Linear).OnComplete(() =>
         {
-            overlay.color = color;
+			overlay.gameObject.SetActive(false);
+			overlay.color = color;
             gm.EnterPostGame();
         });
     }
@@ -103,11 +106,19 @@ public class Character : Entity
             return;
         }
 
-        if (!Invulnerable && Circle.Enemies.Any(CheckCollision))
-        {
-            Die();
-            return;
-        }
+		if (!Invulnerable)
+		{
+			var enemies = Circle.Enemies;
+			var count = enemies.Count;
+
+			for (var i = 0; i < count; i++)
+			{
+				if (!CheckCollision(enemies[i])) continue;
+
+				Die();
+				return;
+			}
+		}
 
         HandleSticking();
     }
@@ -116,22 +127,48 @@ public class Character : Entity
     {
         var direction = (int)Data.Direction * 2 - 1;
         
-        var enemy = Circle.Enemies.FirstOrDefault(e =>
-            e.State == Enemy.StateType.Idle &&
-            e.Data.Side == Data.Side &&
-            Mathf.Repeat(direction * (e.Data.Angle - Data.Angle), 360f) <= StickDistanceToCharacter
-        );
+		Enemy enemy = null;
+
+		var enemies = Circle.Enemies;
+		var count = enemies.Count;
+
+		for (var i = 0; i < count; i++)
+		{
+			var e = enemies[i];
+
+			var distance =  Mathf.Repeat(direction * (e.Data.Angle - Data.Angle), 360f);
+			if (e.State == Enemy.StateType.Idle &&
+			    e.Data.Side == Data.Side &&
+			    distance <= StickDistanceToCharacter)
+			{
+				enemy = e;
+				break;
+			}
+		}
 
         if (enemy == null) return;
 
         var oppositeSide = (EntityData.CircleSide)(1 - (int)Data.Side);
         var nextCircle = (Data.Side == EntityData.CircleSide.Inner) ? Circle.Next : Circle.Previous;
         
-        var otherEnemy = nextCircle.Enemies.FirstOrDefault(e =>
-            e.State == Enemy.StateType.Idle &&
-            e.Data.Side == oppositeSide &&
-            Mathf.Abs(e.Data.Angle - enemy.Data.Angle) <= StickDistanceBetweenEnemies
-        );
+		Enemy otherEnemy = null;
+
+		enemies = nextCircle.Enemies;
+		count = enemies.Count;
+
+		for (var i = 0; i < count; i++)
+		{
+			var e = enemies[i];
+			var distance = Mathf.Abs(e.Data.Angle - enemy.Data.Angle);
+
+			if (e.State == Enemy.StateType.Idle &&
+				e.Data.Side == oppositeSide &&
+			    distance <= StickDistanceBetweenEnemies)
+			{
+				otherEnemy = e;
+				break;
+			}
+		}
 
         if (otherEnemy == null) return;
 

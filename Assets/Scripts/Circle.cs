@@ -161,7 +161,7 @@ public class Circle : MonoBehaviour
             var mesh = _meshFilter.sharedMesh;
             var isFresh = mesh == null;
 
-            MeshFactory.GetRingMesh(Radius, Width, ref mesh, false);
+            MeshFactory.GetRingMesh(Radius, Width, ref mesh);
             if (isFresh) _meshFilter.sharedMesh = mesh;
 
             var material = _meshRenderer.material;
