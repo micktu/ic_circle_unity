@@ -19,7 +19,7 @@ public class Enemy : Entity
     public float StickTime;
 
     private float _stateTime;
-    private Enemy _stickTarget;
+    public Enemy StickTarget { get; private set; }
 
     private StateType _state;
     public StateType State
@@ -27,7 +27,7 @@ public class Enemy : Entity
         get { return _state; }
         set
         {
-            _stickTarget = null;
+            StickTarget = null;
             _stateTime = 0;
             _state = value;
         }
@@ -54,9 +54,11 @@ public class Enemy : Entity
                     return;
                 }
 
-                if (_stickTarget != null)
+                if (StickTarget != null)
                 {
-                    Position = _stickTarget.Circle.AngleToPoint(_stickTarget.Data.Angle + 5);
+                    var side = (int) StickTarget.Data.Side;
+                    Position = StickTarget.Circle.AngleToPoint(StickTarget.Data.Angle + 5,
+                        (side * 2 - 1) * FloorOffset * VisualCircle.Width * Data.Radius - side * GameManager.Instance.UnitsPerPixel);
                 }
                 else
                 {
@@ -79,7 +81,7 @@ public class Enemy : Entity
     public void EnterStuck(Enemy enemy = null)
     {
         State = StateType.Stuck;
-        _stickTarget = enemy;
+        StickTarget = enemy;
     }
 
     protected override void HandleCollision()

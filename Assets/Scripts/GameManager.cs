@@ -54,12 +54,12 @@ public class GameManager : MonoBehaviour
             Level.Clear();
             Level.IsMenuMode = true;
 
-            _lastState = _state;
+            LastState = _state;
             _state = value;
         }
     }
 
-    private StateType _lastState;
+    public StateType LastState;
 
     public bool IsPaused;
 
@@ -139,9 +139,12 @@ public class GameManager : MonoBehaviour
     {
         State = StateType.PostGame;
 
-        var postGame = ContainerPostGame.GetComponent<PostGame>();
-        postGame.Init();
-        
+        if (LastState != StateType.Leaderboard)
+        {
+            var postGame = ContainerPostGame.GetComponent<PostGame>();
+            postGame.Init();
+        }
+
         ContainerPostGame.SetActive(true);
     }
 

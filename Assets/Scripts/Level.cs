@@ -33,6 +33,9 @@ public class Level : MonoBehaviour
 
     private RingLayout _centerLayout;
 
+    private Queue<int> _animationQueue = new Queue<int>();
+    private int _currentAnimationDirection;
+
     void Awake()
     {
        SetupCircles();
@@ -40,7 +43,27 @@ public class Level : MonoBehaviour
 
     void Update()
     {
-    
+        if (Character == null) return;
+
+        var isAnimating = Character.Circle.IsAnimating;
+
+        if (!isAnimating) _currentAnimationDirection = 0;
+
+        if (_animationQueue.Count > 0)
+        {
+            if (isAnimating)
+            {
+                if (_animationQueue.Peek() != _currentAnimationDirection)
+                {
+                    
+                }
+            }
+            else
+            {
+                _currentAnimationDirection = _animationQueue.Dequeue();
+                Animate(_currentAnimationDirection);
+            }
+        }
     }
 
     void SetupCircles()
@@ -118,6 +141,11 @@ public class Level : MonoBehaviour
         Character.Reset();
 
         Character.gameObject.SetActive(true);
+    }
+
+    public void EnqueueAnimation(int direction)
+    {
+        _animationQueue.Enqueue(direction);
     }
 
     public void Animate(int direction)

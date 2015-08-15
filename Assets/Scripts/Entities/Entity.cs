@@ -7,6 +7,8 @@ public class Entity : MonoBehaviour
 {
     public float LayerZ = 1;
 
+    public float CollisionAngle;
+
     public Vector2 Position
     {
         get { return transform.position; }
@@ -82,7 +84,7 @@ public class Entity : MonoBehaviour
 
     protected void UpdatePosition(float distance)
     {
-        UpdatePosition(distance, FloorOffset);
+        UpdatePosition(distance, RotationOffset);
     }
 
     protected void UpdatePosition(float distance, float rotation)
@@ -133,16 +135,25 @@ public class Entity : MonoBehaviour
         Data.Direction = (EntityData.CircleDirection)(1 - (int)Data.Direction);
     }
 
+    protected float GetSmallestAngleTo(Entity entity)
+    {
+        var angle = Data.Angle - entity.Data.Angle;
+        
+        if (angle > 180) angle = 360 - angle;
+        else if (angle < 0) angle = -angle;
+
+        return angle;
+    }
+
     protected bool CheckCollision(Entity entity)
     {
-        return Data.Side == entity.Data.Side && (Position - entity.Position).magnitude <= (Data.Radius + entity.Data.Radius) * VisualCircle.Width / 2;
+        return Data.Side == entity.Data.Side && GetSmallestAngleTo(entity) <= entity.CollisionAngle;
     }
 
     protected bool CheckHoleCollision()
     {
-       //var hit = Circle.Hole != null && (Circle.Hole.Position - Position).magnitude <= Data.Radius * VisualCircle.Width / 2 / 0.95f;
-        var direction = (int)Data.Direction * 2 - 1;
-        var hit = Circle.Hole != null && Mathf.Repeat(direction * (Circle.Hole.Data.Angle - Data.Angle), 360f) <= 15f;
+        var hole = Circle.Hole;
+        var hit = hole != null && GetSmallestAngleTo(hole) <= hole.CollisionAngle;
 
         if (hit && _isinHole) return false;
 

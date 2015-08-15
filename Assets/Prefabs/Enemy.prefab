@@ -41,6 +41,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   LayerZ: -2
+  CollisionAngle: 7.5
   FloorOffset: .5
   RotationOffset: 0
   AlignRotation: 0
@@ -136,6 +137,10 @@ Prefab:
       propertyPath: InactiveMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 6c2ccb9b615e7974081958be75c96d9b, type: 2}
+    - target: {fileID: 0}
+      propertyPath: CollisionAngle
+      value: 7.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
   m_RootGameObject: {fileID: 180344}

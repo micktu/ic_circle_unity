@@ -5,10 +5,9 @@ using UnityEngine.UI;
 
 public class PostGame : MonoBehaviour
 {
-    public Text ScoreText, RecordText;
+    public Text ScoreText, RecordText, SubmitText;
     public InputField NameInput;
     public Button SubmitButton;
-    public Image Overlay;
 
     private int _currentScore;
 
@@ -16,7 +15,7 @@ public class PostGame : MonoBehaviour
 
     void Start()
     {
-    
+
     }
     
     void Update()
@@ -45,6 +44,10 @@ public class PostGame : MonoBehaviour
         NameInput.text = playerName;
         SubmitButton.interactable = playerName.Length > 0;
 
+        NameInput.gameObject.SetActive(true);
+        SubmitButton.gameObject.SetActive(true);
+        SubmitText.gameObject.SetActive(false);
+
         //_keyboard = TouchScreenKeyboard.Open(playerName, TouchScreenKeyboardType.Default, false, false, false, true, "Type your name...");
     }
 
@@ -72,6 +75,10 @@ public class PostGame : MonoBehaviour
 
         NameInput.interactable = true;
         SubmitButton.interactable = true;
+
+        NameInput.gameObject.SetActive(false);
+        SubmitButton.gameObject.SetActive(false);
+        SubmitText.gameObject.SetActive(true);
     }
 
     public void OnPlayerNameChanged()

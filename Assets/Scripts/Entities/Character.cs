@@ -94,7 +94,7 @@ public class Character : Entity
             var levelDifference = 1 + Circle.Level.CurrentLevel - SpeedIncreaseLevel;
             Data.Speed = levelDifference > 0 ? Speed + levelDifference * SpeedPerLevel : Speed;
 
-            Circle.Level.Animate(1 - (int) Data.Side * 2);
+            Circle.Level.EnqueueAnimation(1 - (int) Data.Side * 2);
             SwitchSide();
 
             var currentLevel = Circle.Level.CurrentLevel;
@@ -113,7 +113,9 @@ public class Character : Entity
 
 			for (var i = 0; i < count; i++)
 			{
-				if (!CheckCollision(enemies[i])) continue;
+			    var e = enemies[i];
+			    var isStuckToOther = e.State == Enemy.StateType.Stuck && e.StickTarget != null;
+                if (isStuckToOther || !CheckCollision(enemies[i])) continue;
 
 				Die();
 				return;

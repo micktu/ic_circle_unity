@@ -66,4 +66,18 @@ public class Leaderboard : MonoBehaviour
             text.transform.localScale = Vector3.one;
         }
     }
+
+    public void Leave()
+    {
+        var gm = GameManager.Instance;
+
+        if (gm.LastState == GameManager.StateType.PostGame)
+        {
+            gm.EnterPostGame();
+        }
+        else
+        {
+           gm.EnterMainMenu();
+        }
+    }
 }
